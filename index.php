@@ -1,44 +1,27 @@
-<?php
-  session_start();
-
-  require 'database.php';
-
-  if (isset($_SESSION['user_id'])) {
-    $records = $conn->prepare('SELECT id, email, password FROM users WHERE id = :id');
-    $records->bindParam(':id', $_SESSION['user_id']);
-    $records->execute();
-    $results = $records->fetch(PDO::FETCH_ASSOC);
-
-    $user = null;
-
-    if (count($results) > 0) {
-      $user = $results;
-    }
-  }
-?>
-
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Welcome to you WebApp</title>
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css">
-  </head>
-  <body>
-    <?php require 'partials/header.php' ?>
-
-    <?php if(!empty($user)): ?>
-      <br> Welcome. <?= $user['email']; ?>
-      <br>You are Successfully Logged In
-      <a href="logout.php">
-        Logout
-      </a>
-    <?php else: ?>
-      <h1>Please Login or SignUp</h1>
-
-      <a href="login.php">Login</a> or
-      <a href="signup.php">SignUp</a>
-    <?php endif; ?>
-  </body>
+<?php include('index_header.php'); ?>
+			<?php include('dbcon.php'); ?>
+    <body>
+        <div class="container">
+            <!-- Codrops top bar -->
+            <div class="codrops-top">
+                <div class="clr"><div class="title">DeportX</div></div>
+            </div><!--/ Codrops top bar -->
+            <section>				
+			
+                <div id="container_demo" >
+				
+                    <a class="hiddenanchor" id="toregister"></a>
+                    <a class="hiddenanchor" id="tologin"></a>
+                    <div id="wrapper">
+                        <div id="login" class="animate form">
+								<?php include('login_form.php'); ?>
+                        </div>
+                        <div id="register" class="animate form">
+								<?php include('sign_up_form.php'); ?>
+                        </div>
+                    </div>
+                </div>  
+            </section>
+        </div>
+    </body>
 </html>
